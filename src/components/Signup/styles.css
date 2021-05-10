@@ -1,0 +1,24 @@
+.container-signup {
+  padding: 3%;
+  background-color: #fff;
+  border-radius: 5%;
+  border: 2px solid #777;
+  opacity: 0.8;
+  justify-content: flex-end;
+}
+
+.button-signup-registrar, .ya-tienes-una-cuenta {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inicia-sesion-signup, span {
+  margin-left: 10px;
+  color: #2C2C54;
+}
+
+a:link, a:visited, a:active {
+  text-decoration:none;
+}

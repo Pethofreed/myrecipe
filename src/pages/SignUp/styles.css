@@ -1,0 +1,17 @@
+.fondo-signup {
+  background-image: url("signup-banner1.jpg");
+  position: absolute;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100%;
+}
+
+.form-into-column {
+  padding: 0;
+  margin-right:10%;
+}
+
+.row {
+  justify-content: flex-end;
+  align-items: center;
+}

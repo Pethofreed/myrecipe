@@ -1,0 +1,7 @@
+.fondo-signin {
+  background-image: url("signin-banner.jpg");
+  position: absolute;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100%;
+}
