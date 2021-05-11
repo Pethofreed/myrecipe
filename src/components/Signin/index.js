@@ -1,8 +1,11 @@
 import './styles.css'
 import axios from 'axios'
-import { Form,
+import {
+  Form,
   Button,
-  Container
+  Container,
+  Row,
+  Col
 } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -40,13 +43,13 @@ function SignIn() {
       localStorage.setItem('token', data.token)
       history.push('/profile')
     } catch(error){
-      dispatch(changeError())
+      dispatch(changeError(error.message))
     }
   }
 
   return (
-    <Container className="container-signin">
-      <Form onSubmit={handleSubmit}>
+    <div className="container-signin">
+      <Form onSubmit={handleSubmit} className="form-signin">
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Correo</Form.Label>
           <Form.Control
@@ -86,7 +89,7 @@ function SignIn() {
           </Form.Text>
         </Form.Group>
       </Form>
-    </Container>
+    </div>
   )
 }
 

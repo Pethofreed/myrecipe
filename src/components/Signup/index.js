@@ -53,7 +53,7 @@ function SignUp() {
         localStorage.setItem('token', data.token)
         history.push('/profile')
       } catch(error){
-        dispatch(changeError(error.message))
+        dispatch(changeError(error.response.data.message))
       }
     }
   }
@@ -111,15 +111,17 @@ function SignUp() {
               ¿Ya tienes una cuenta? <a href="/signin"><span className="inicia-sesion-signup">Inicia Sesión</span></a>
           </Form.Text>
         </Form.Group>
+        {error &&
+          <Form.Group className="error-message">
+            <Form.Label className="error-message">
+              {error}
+            </Form.Label>
+        </Form.Group>
+        }
         <Form.Group className="button-signup-registrar">
           <Button variant="outline-success" type="submit">
             Registrarme
           </Button>
-          { error &&
-            <Form.Text className="text-muted">
-              {error}
-            </Form.Text>
-          }
         </Form.Group>
       </Form>
     </Container>

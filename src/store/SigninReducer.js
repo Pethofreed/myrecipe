@@ -33,12 +33,14 @@ export function SigninReducer(state = initialState, action) {
     case CHANGE_EMAIL:
       return {
         ...state,
-        email: action.payload
+        email: action.payload,
+        error: null,
       }
     case CHANGE_PASSWORD:
       return {
         ...state,
-        password: action.payload
+        password: action.payload,
+        error: null,
       }
     case CHANGE_ERROR:
       return {

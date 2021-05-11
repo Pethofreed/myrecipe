@@ -77,6 +77,7 @@ export function SignupReducer(state = initialState, action){
       return {
         ...state,
         email: action.payload,
+        error: '',
       }
     case CHANGE_SPECIALITY:
       return {

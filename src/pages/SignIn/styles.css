@@ -4,4 +4,15 @@
   background-repeat: no-repeat;
   width: 100%;
   min-height: 100%;
+  z-index: -1;
+}
+
+.logo-signin {
+  background-image: url("logo.png");
+  position: absolute;
+  background-repeat: no-repeat;
+  min-height: 100%;
+  opacity: 0.8;
+  margin-top: 3%;
+  z-index: 1;
 }

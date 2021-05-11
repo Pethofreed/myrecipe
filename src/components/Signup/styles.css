@@ -3,11 +3,12 @@
   background-color: #fff;
   border-radius: 5%;
   border: 2px solid #777;
-  opacity: 0.8;
+  opacity: 0.9;
   justify-content: flex-end;
+  box-shadow: 30px 30px 5px black;
 }
 
-.button-signup-registrar, .ya-tienes-una-cuenta {
+.button-signup-registrar, .ya-tienes-una-cuenta, .error-message {
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -21,4 +22,10 @@
 
 a:link, a:visited, a:active {
   text-decoration:none;
+}
+
+.error-message {
+  font-size: 14px;
+  font-weight: bold;
+  color: red;
 }

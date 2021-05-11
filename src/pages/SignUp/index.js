@@ -12,7 +12,7 @@ export function SignupForm() {
       <Row className="fondo-signup">
         <Col sm={12}>
           <Row className="row">
-            <Col sm={4} md={3} className="form-into-column">
+            <Col xs={10} sm={7} md={5} lg={4} xl={3} className="form-into-column">
               <SignUp />
             </Col>
           </Row>
