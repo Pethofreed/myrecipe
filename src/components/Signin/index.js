@@ -2,10 +2,7 @@ import './styles.css'
 import axios from 'axios'
 import {
   Form,
-  Button,
-  Container,
-  Row,
-  Col
+  Button
 } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -41,7 +38,7 @@ function SignIn() {
       })
 
       localStorage.setItem('token', data.token)
-      history.push('/profile')
+      history.push('/myrecipes')
     } catch(error){
       dispatch(changeError(error.message))
     }
@@ -57,15 +54,17 @@ function SignIn() {
             placeholder="Email"
             onChange={(e) => dispatch(changeEmail(e.target.value))}
             value={email}
+            required
           />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Contraseña</Form.Label>
           <Form.Control
-          type="password"
-          placeholder="Password"
-          onChange={(e) => dispatch(changePassword(e.target.value))}
+            type="password"
+            placeholder="Password"
+            onChange={(e) => dispatch(changePassword(e.target.value))}
             value={password}
+            required
           />
         </Form.Group>
         {error &&

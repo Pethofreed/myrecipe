@@ -10,7 +10,7 @@ export function SignupForm() {
   return(
     <Container fluid>
       <Row className="fondo-signup">
-        <Col sm={12}>
+        <Col sm={12} >
           <Row className="row">
             <Col xs={10} sm={7} md={5} lg={4} xl={3} className="form-into-column">
               <SignUp />

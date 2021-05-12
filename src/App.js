@@ -5,12 +5,22 @@ Switch
 } from 'react-router-dom'
 import './App.css';
 import React from 'react'
-import { Profile } from './pages/Profile'
+import { history } from './utils/history'
 import { SignupForm } from './pages/SignUp'
 import { SigninForm } from './pages/SignIn'
-import { history } from './utils/history'
 import { LandingPage } from './pages/Landing'
+import { Favorites } from './pages/Favorites'
+import { MyRecipes } from './pages/MyRecipes'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+function PrivateRoute({children, ...rest}) {
+  const token = localStorage.getItem('token')
+  return (
+    <Route {...rest} render={() => {
+      return token ? children : <Redirect to="/signin" />
+    }} />
+  )
+}
 
 function App() {
   return (
@@ -25,9 +35,12 @@ function App() {
         <Route exact path="/signin">
           <SigninForm />
         </Route>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
+        <PrivateRoute exact path="/favorites">
+          <Favorites />
+        </PrivateRoute>
+        <PrivateRoute exact path="/myrecipes">
+          <MyRecipes />
+        </PrivateRoute>
       </Switch>
     </Router>
   )
