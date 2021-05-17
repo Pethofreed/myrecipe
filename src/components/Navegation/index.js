@@ -15,7 +15,7 @@ import Modal from 'react-bootstrap/Modal'
 import LogoNavbar from './logo_navbar.png'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function Navigation() {
+function Navigation({top}) {
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -65,7 +65,7 @@ function Navigation() {
   return (
     <>
       <Row>
-        <Navbar bg="dark" variant="dark" fixed="top">
+        <Navbar bg="dark" variant="dark" fixed={top}>
           <Col xs={12} sm={4} className="d-none d-sm-block">
             <Navbar.Brand href="/" >
               <img src={LogoNavbar} alt="logo my recipe" className="logo-navbar"/>

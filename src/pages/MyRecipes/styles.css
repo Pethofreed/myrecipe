@@ -1,0 +1,36 @@
+.header-profile {
+  margin-top: 0%;
+  margin-right: 0;
+  align-items: flex-start;
+}
+
+.alinear-items-top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.datos-perfil {
+  align-self: baseline;
+}
+
+.btn-edit-profile {
+  text-align: end;
+}
+
+.edit-photo {
+  cursor: pointer;
+}
+
+.cancel-photo {
+  margin-left: 8%;
+  cursor: pointer;
+}
+
+.input-file {
+  display: none;
+}
+
+.container-cards {
+  display: flex;
+  font: -webkit-small-control;
+}

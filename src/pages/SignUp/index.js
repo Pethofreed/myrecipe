@@ -5,10 +5,13 @@ Col
 import './styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUp from '../../components/Signup'
+import Navigation from '../../components/Navegation'
 
 export function SignupForm() {
   return(
-    <Container fluid>
+    <>
+      <Navigation top="top" />
+      <Container fluid>
       <Row className="fondo-signup">
         <Col sm={12} >
           <Row className="row">
@@ -19,5 +22,6 @@ export function SignupForm() {
         </Col>
       </Row>
     </Container>
+    </>
   )
 }

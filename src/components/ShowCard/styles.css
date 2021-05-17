@@ -1,0 +1,8 @@
+.card-recipes {
+  width: 25%;
+}
+
+.btns-card {
+  display: flex;
+  justify-content: space-between;
+}

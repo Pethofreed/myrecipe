@@ -12,7 +12,6 @@ import { useHistory } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useDispatch, useSelector} from 'react-redux'
 import { Form, Button, Container } from 'react-bootstrap'
-import Navigation from '../Navegation'
 
 function SignUp() {
 
@@ -61,7 +60,6 @@ function SignUp() {
 
   return (
     <>
-      <Navigation />
       <Container className="container-signup text-center">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="name">

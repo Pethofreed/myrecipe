@@ -1,12 +1,16 @@
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
+import { UserReducer } from './UserReducer'
 import { SignupReducer } from './SignupReducer'
 import { SigninReducer } from './SigninReducer'
+import { RecipesReducer } from './RecipesReducer'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const appReducers = combineReducers({
+  UserReducer,
   SignupReducer,
   SigninReducer,
+  RecipesReducer,
 })
 
 const rootReducer = (state, action) => {
