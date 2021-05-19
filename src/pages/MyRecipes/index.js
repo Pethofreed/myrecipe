@@ -3,6 +3,9 @@ import {
   ListGroup,
   Container,
   Tooltip,
+  Spinner,
+  Alert,
+  Button,
   Card,
   Row,
   Col,
@@ -23,6 +26,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getRecipes } from '../../store/RecipesReducer'
 import CreateRecipe from '../../components/CreateRecipe'
 
+
 export function MyRecipes() {
 
   const dispatch = useDispatch()
@@ -35,15 +39,15 @@ export function MyRecipes() {
   useEffect(() => {
     dispatch(getUser())
     dispatch(getRecipes())
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, EditProfile, CreateRecipe])
 
-  const { user, recipes } = useSelector(({
+  const { user, recipes, loading } = useSelector(({
     UserReducer, RecipesReducer
   }) => ({
     user: UserReducer.user,
-    recipes: RecipesReducer.recipes
+    recipes: RecipesReducer.recipes,
+    loading: RecipesReducer.loading
   }))
 
   function hadleChangeImage(e) {
@@ -109,7 +113,7 @@ export function MyRecipes() {
     <Row className="header-profile mt-3">
       <Col>
         <Row class="alinear-items-top">
-          <Col>
+          <Col className="profile-card">
             <Card
               border="primary"
               bg="light"
@@ -145,7 +149,6 @@ export function MyRecipes() {
                           {file === null  &&
                             <img
                               src={EditIcon}
-                              width="49%"
                               className="edit-photo"
                               alt="Icono de cambiar foto"
                             />
@@ -161,14 +164,14 @@ export function MyRecipes() {
                           <>
                             <img
                               src={AcceptIcon}
-                              width="48%"
+                              width="20px"
                               className="edit-photo"
                               onClick={submitPicture}
                               alt="Icono de aceptar foto"
                             />
                             <img
                               src={CancelIcon}
-                              width="44%"
+                              width="20px%"
                               className="cancel-photo"
                               onClick={cancelCharge}
                               alt="Icono de cancelar foto"
@@ -199,7 +202,7 @@ export function MyRecipes() {
         </Col>
         </Row>
       </Col>
-      <Col  className="d-none d-sm-block">
+      <Col sm={4}>
         <Row>
           <Col className="btn-edit-profile m-2">
             <EditProfile user={user} token={token} />
@@ -210,10 +213,40 @@ export function MyRecipes() {
         </Row>
       </Col>
     </Row>
-    <Container>
-      <Row  className="container-cards" >
-        <ShowCard recipes={recipes} token={token}/>
-      </Row>
+    <Container className="container-myrecipes">
+      <div className="contenedor-dos">
+        {loading &&
+          <Row>
+            <Col className="btn-loading">
+              <Button variant="primary" className="loading-message" disabled>
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                Cargando . . .
+              </Button>
+            </Col>
+          </Row>
+        }
+        {error &&
+          <Alert variant="danger" className="alert-myrecipes">
+            lo sentimos, hubo un error al cargar la información.
+          </Alert>
+        }
+        {!!recipes && recipes.length > 0 ?
+        <Row>
+          <Col className="cards-individual flex-wrap d-flex">
+            <ShowCard recipes={recipes} token={token} />
+          </Col>
+        </Row> :
+          <Alert variant="secondary" className="no-tienes-recetas-message">
+            No tienes recetas.
+          </Alert>
+        }
+      </div>
     </Container>
     </>
   )

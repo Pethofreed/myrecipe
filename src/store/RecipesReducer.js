@@ -39,7 +39,7 @@ export function getRecipes() {
 const initialState = {
   recipes: [],
   loading: false,
-  error: null,
+  error: null
 }
 
 export function RecipesReducer(state = initialState, action){

@@ -13,12 +13,17 @@
   align-self: baseline;
 }
 
+.profile-card {
+  text-align: -webkit-right;
+}
+
 .btn-edit-profile {
   text-align: end;
 }
 
 .edit-photo {
   cursor: pointer;
+  width: 20px;
 }
 
 .cancel-photo {
@@ -30,7 +35,25 @@
   display: none;
 }
 
-.container-cards {
-  display: flex;
+.container-myrecipes {
+  display: block;
   font: -webkit-small-control;
+}
+
+.contenedor-dos {
+  display: block;
+}
+
+.alert-myrecipes {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.btn-loading {
+  display: grid;
+}
+
+.cards-individual {
+  display: flex;
+  width: 100%;
 }

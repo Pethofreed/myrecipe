@@ -3,6 +3,7 @@ import {
   ListGroupItem,
   ListGroup,
   Button,
+  Alert,
   Modal,
   Card,
   Row,
@@ -14,11 +15,15 @@ import { useState, useEffect } from 'react'
 import { getRecipes } from '../../store/RecipesReducer'
 
 
+
 function ShowCard({recipes, token}) {
 
   const dispatch = useDispatch()
   const [error, setError] = useState(null)
-  const [smShow, setSmShow] = useState(false);
+  const [smShow, setSmShow] = useState(false)
+  const [alertShow, setAlertShow] = useState(false)
+  const [idDelete, setIdDelete] = useState(null)
+  const [nameDelete, setNameDelete] = useState(null)
 
   useEffect(() => {
     setSmShow(false)
@@ -26,31 +31,30 @@ function ShowCard({recipes, token}) {
   }, [setSmShow])
 
   async function deleteRecipe(id) {
-    let opcion = window.confirm('¿Desea eliminar esta receta?')
-    if(opcion) {
-      try {
-        const { data } = await axios({
-          method: 'PUT',
-          baseURL: process.env.REACT_APP_SERVER_URL,
-          url: '/recipes/delete',
-          data: {
-            id,
-          },
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        setSmShow(true)
-        dispatch(getRecipes())
-      } catch(error) {
-        setError(error.message)
-      }
+    try {
+      await axios({
+        method: 'PUT',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/recipes/delete',
+        data: {
+          id,
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      setIdDelete(null)
+      setNameDelete(null)
+      setSmShow(true)
+      dispatch(getRecipes())
+    } catch(error) {
+      setError(error.message)
     }
   }
 
   return (
     <>
-      {!!recipes && recipes.length > 0 ? recipes.map( ({
+      {!!recipes && recipes.length > 0 && recipes.map( ({
         id,
         title,
         duration,
@@ -59,45 +63,46 @@ function ShowCard({recipes, token}) {
         picture
       }) => {
         return (
-          <Col class="card-individual d-flex">
-            <Card
-              className="card-myrecipes"
-              key={id}
-            >
-              <Card.Img
-                variant="top"
-                src={picture}
-                alt="imagen de receta"
-              />
-              <Card.Body>
-                <Card.Title>{title}</Card.Title>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-                <ListGroupItem>Dificultad: {level}</ListGroupItem>
-                <ListGroupItem>Duración: {duration}</ListGroupItem>
-                <ListGroupItem>Puntos: {positivePoints > 0 ? positivePoints : 0}</ListGroupItem>
-              </ListGroup>
-              <Card.Body>
-                <Row>
-                  <Col className="btns-card">
-                    <Button variant="primary" size="sm">
-                      Ver
-                    </Button>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={e => deleteRecipe(id)}
-                    >
-                      Eliminar
-                    </Button>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-          </Col>
+          <Card
+            className="card-myrecipes"
+            key={id}
+          >
+            <Card.Img
+              variant="top"
+              src={picture}
+              alt="imagen de receta"
+            />
+            <Card.Body>
+              <Card.Title>{title}</Card.Title>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroupItem>Dificultad: {level}</ListGroupItem>
+              <ListGroupItem>Duración: {duration}</ListGroupItem>
+              <ListGroupItem>Puntos: {positivePoints > 0 ? positivePoints : 0}</ListGroupItem>
+            </ListGroup>
+            <Card.Body>
+              <Row>
+                <Col className="btns-card">
+                  <Button variant="primary" size="sm">
+                    Ver
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={e => (
+                        setIdDelete(id),
+                        setAlertShow(true),
+                        setNameDelete(title)
+                    )}
+                  >
+                    Eliminar
+                  </Button>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
         )
-      }) :
-      <p>Aun no ha creado ninguna receta.</p>
+      })
     }
 
     <Modal
@@ -113,8 +118,41 @@ function ShowCard({recipes, token}) {
       </Modal.Header>
       <Modal.Body>Su receta se eliminó correctamente.</Modal.Body>
       <Modal.Footer>
-        <Button onClick={() => setSmShow(false)}>
+        <Button
+          variant="outline-primary"
+          onClick={() => setSmShow(false)}
+        >
           Ok
+        </Button>
+      </Modal.Footer>
+    </Modal>
+
+    <Modal
+      size="sm"
+      show={alertShow}
+      onHide={() => setAlertShow(false)}
+      aria-labelledby="example-modal-sizes-title-sm"
+    >
+      <Modal.Header className="title-modal-delete">
+        <Modal.Title id="example-modal-sizes-title-sm">
+          ¿Eliminar?
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="body-modal-delete">
+        {nameDelete}
+      </Modal.Body>
+      <Modal.Footer className="btns-delete-recipies">
+        <Button
+          variant="outline-success"
+          onClick={e => deleteRecipe(idDelete)}
+        >
+          Sí
+        </Button>
+        <Button
+          variant="outline-danger"
+          onClick={() => setAlertShow(false)}
+        >
+          No
         </Button>
       </Modal.Footer>
     </Modal>

@@ -7,19 +7,25 @@ import {
 } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { getUser } from '../../store/UserReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
 function EditarPerfil({user, token}) {
 
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
-  const [name, setName] = useState(user.name)
+  const [name, setName] = useState(null)
   const [password, setPassword] = useState('')
-  const [email, setEmail] = useState(user.email)
+  const [email, setEmail] = useState(null)
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [speciality, setSpeciality] = useState(user.speciality)
+  const [speciality, setSpeciality] = useState(null)
 
+  if(!!user && user.length > 0){
+    setName(user.name)
+    setEmail(user.email)
+    setSpeciality(user.speciality)
+  }
 
   function handleClose() {
     setShow(false)

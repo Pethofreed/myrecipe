@@ -4,6 +4,7 @@ import { UserReducer } from './UserReducer'
 import { SignupReducer } from './SignupReducer'
 import { SigninReducer } from './SigninReducer'
 import { RecipesReducer } from './RecipesReducer'
+import { AllRecipesReducer } from './AllRecipesReducer'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const appReducers = combineReducers({
@@ -11,6 +12,7 @@ const appReducers = combineReducers({
   SignupReducer,
   SigninReducer,
   RecipesReducer,
+  AllRecipesReducer
 })
 
 const rootReducer = (state, action) => {

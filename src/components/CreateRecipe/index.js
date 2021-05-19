@@ -1,4 +1,5 @@
 import {
+  Spinner,
   Button,
   Modal,
   Form,
@@ -9,7 +10,6 @@ import './styles.css'
 import axios from 'axios'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { getRecipes } from '../../store/RecipesReducer'
 
 function CreateRecipe({token}) {
@@ -19,11 +19,15 @@ function CreateRecipe({token}) {
   const [title, setTitle] = useState('')
   const [level, setLevel] = useState('')
   const [show, setShow] = useState(false)
+  const [smShow, setSmShow] = useState(false)
   const [picture, setPicture] = useState(null)
   const [duration, setDuration] = useState('')
+  const [loading, setLoading] = useState(false)
   const [noSubmit, setNoSubmit] = useState(false)
   const [ingredients, setIngredients] = useState('')
   const [description, setDescription] = useState('')
+  const img = new Image()
+
 
   function handleClose() {
     setTitle('')
@@ -34,6 +38,7 @@ function CreateRecipe({token}) {
     setIngredients('')
     setDescription('')
     setNoSubmit(false)
+    setLoading(false)
   }
 
   function handlePicture(e){
@@ -72,6 +77,7 @@ function CreateRecipe({token}) {
     e.preventDefault()
     if(validator()){
       try{
+          setLoading(true)
           const form = new FormData()
           form.append('level', level)
           form.append('title', title)
@@ -80,7 +86,7 @@ function CreateRecipe({token}) {
           form.append('ingredients', ingredients)
           form.append('picture', picture[0], picture[0].name)
 
-        const { data } = await axios({
+        await axios({
           method: 'POST',
           baseURL: process.env.REACT_APP_SERVER_URL,
           url: '/recipes/create',
@@ -90,6 +96,7 @@ function CreateRecipe({token}) {
             'Authorization': `Bearer ${token}`
           }
         })
+        setSmShow(true)
         handleClose()
         dispatch(getRecipes())
       } catch(error){
@@ -207,6 +214,22 @@ function CreateRecipe({token}) {
                       ** Te faltan campos por llenar ({camp}) **
                     </p>
                   }
+                  {loading &&
+                    <Row>
+                      <Col className="btn-loading">
+                        <Button variant="success" className="loading-message">
+                          <Spinner
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                           Creando . . .
+                        </Button>
+                      </Col>
+                    </Row>
+                  }
                 </Form.Group>
               </Col>
             </Row>
@@ -225,6 +248,28 @@ function CreateRecipe({token}) {
           </Modal.Footer>
         </Modal>
       </Form>
+
+      <Modal
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            ¡Completado!
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Su receta se creó correctamente.</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-primary"
+            onClick={() => setSmShow(false)}
+          >
+            Ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 
