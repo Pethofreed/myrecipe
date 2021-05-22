@@ -4,12 +4,12 @@ import {
   Container,
   Tooltip,
   Spinner,
-  Alert,
   Button,
+  Alert,
   Card,
+  Form,
   Row,
-  Col,
-  Form
+  Col
 } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios'
@@ -17,6 +17,7 @@ import EditIcon from './edit.png'
 import AcceptIcon from './accept.png'
 import CancelIcon from './cancel.png'
 import { useState, useEffect } from 'react'
+import Footer from '../../components/Footer'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ShowCard from '../../components/ShowCard'
 import { getUser } from '../../store/UserReducer'
@@ -112,7 +113,7 @@ export function MyRecipes() {
     </Row>
     <Row className="header-profile mt-3">
       <Col>
-        <Row class="alinear-items-top">
+        <Row className="alinear-items-top">
           <Col className="profile-card">
             <Card
               border="primary"
@@ -185,7 +186,7 @@ export function MyRecipes() {
               </Row>
             </Card.Header>
             <Card.Body className="p-0">
-              {user.picture === null && image === null && <p class="text-center mt-2">Suba su foto de perfil</p>}
+              {user.picture === null && image === null && <p className="text-center mt-2">Suba su foto de perfil</p>}
               {user.picture && image === null && <img src={user.picture} width="100%" alt="foto de perfil"/>}
               {image && <img src={image} alt="Profile Preview" width="100%" />}
             </Card.Body>
@@ -213,6 +214,7 @@ export function MyRecipes() {
         </Row>
       </Col>
     </Row>
+
     <Container className="container-myrecipes">
       <div className="contenedor-dos">
         {loading &&
@@ -233,7 +235,7 @@ export function MyRecipes() {
         }
         {error &&
           <Alert variant="danger" className="alert-myrecipes">
-            lo sentimos, hubo un error al cargar la información.
+            Lo sentimos, hubo un error al cargar la información. Inténtalo más tarde. 
           </Alert>
         }
         {!!recipes && recipes.length > 0 ?
@@ -248,6 +250,7 @@ export function MyRecipes() {
         }
       </div>
     </Container>
+    <Footer />
     </>
   )
 }

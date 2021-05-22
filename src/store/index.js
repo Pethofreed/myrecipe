@@ -5,10 +5,12 @@ import { SignupReducer } from './SignupReducer'
 import { SigninReducer } from './SigninReducer'
 import { RecipesReducer } from './RecipesReducer'
 import { AllRecipesReducer } from './AllRecipesReducer'
+import { RecipeReducer } from './RecipeReducer'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const appReducers = combineReducers({
   UserReducer,
+  RecipeReducer,
   SignupReducer,
   SigninReducer,
   RecipesReducer,

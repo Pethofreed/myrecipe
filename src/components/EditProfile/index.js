@@ -7,9 +7,8 @@ import {
 } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { getUser } from '../../store/UserReducer'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 function EditarPerfil({user, token}) {
 

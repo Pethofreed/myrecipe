@@ -91,6 +91,9 @@ function Navigation({top}) {
                 {token && <Col>
                   <Nav.Link href="/myrecipes">Mis Recetas</Nav.Link>
                 </Col>}
+                <Col className="d-md-none">
+                  <Nav.Link onClick = {e => setShow(true)}>Buscar</Nav.Link>
+                </Col>
                 {token && <Col>
                   <Nav.Link onClick={handleClick}>Cerrar Sesion</Nav.Link>
                 </Col>}
@@ -100,9 +103,6 @@ function Navigation({top}) {
                 {!token && <Col>
                   <Nav.Link href="/signup">Regístrate</Nav.Link>
                 </Col>}
-                <Col className="d-md-none">
-                  <Nav.Link onClick = {e => setShow(true)}>Buscar</Nav.Link>
-                </Col>
               </Nav>
             </Row>
           </Col>

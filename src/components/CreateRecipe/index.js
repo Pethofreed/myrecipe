@@ -26,8 +26,6 @@ function CreateRecipe({token}) {
   const [noSubmit, setNoSubmit] = useState(false)
   const [ingredients, setIngredients] = useState('')
   const [description, setDescription] = useState('')
-  const img = new Image()
-
 
   function handleClose() {
     setTitle('')

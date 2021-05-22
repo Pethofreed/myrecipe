@@ -2,14 +2,17 @@ import {
   Container,
   Spinner,
   Button,
-  Alert
+  Alert,
+  Row,
+  Col
 } from 'react-bootstrap'
 import './styles.css'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import Footer from '../../components/Footer'
 import Navigation from "../../components/Navegation"
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllRecipes } from '../../store/AllRecipesReducer'
 import LandingCard from '../../components/LandingCards'
+import { getAllRecipes } from '../../store/AllRecipesReducer'
 
 
 export function LandingPage() {
@@ -31,29 +34,42 @@ export function LandingPage() {
 
   return(
     <>
-      <Navigation top="top"/>
-      <Container className="container-landing d-flex">
+      <Row>
+        <Col>
+          <Navigation top="top"/>
+        </Col>
+      </Row>
+      <Container className="container-landing">
         <div className="contenedor-dos">
           {loading &&
-            <Button variant="primary" className="loading-message" disabled>
-              <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              Cargando . . .
-            </Button>
+            <Row className="row-btn-cargando">
+              <Col className="btn-loading">
+                <Button variant="primary" className="loading-message" disabled>
+                  <Spinner
+                    as="span"
+                    animation="grow"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  Cargando . . .
+                </Button>
+              </Col>
+            </Row>
           }
           {error &&
-            <Alert variant="danger">
-            lo sentimos, hubo un error al cargar la información.
-          </Alert>
+            <Alert variant="danger" className="alert-myrecipes">
+              lo sentimos, hubo un error al cargar la información.
+            </Alert>
           }
-          <LandingCard allRecipes={AllRecipes} />
+          <Row className="row-cards">
+            <Col className="cards-individual flex-wrap d-flex">
+              <LandingCard allRecipes={AllRecipes} />
+            </Col>
+          </Row>
         </div>
       </Container>
+      <Footer />
     </>
   )
 }

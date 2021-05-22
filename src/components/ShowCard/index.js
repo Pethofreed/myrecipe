@@ -3,7 +3,6 @@ import {
   ListGroupItem,
   ListGroup,
   Button,
-  Alert,
   Modal,
   Card,
   Row,
@@ -21,14 +20,14 @@ function ShowCard({recipes, token}) {
   const dispatch = useDispatch()
   const [error, setError] = useState(null)
   const [smShow, setSmShow] = useState(false)
-  const [alertShow, setAlertShow] = useState(false)
   const [idDelete, setIdDelete] = useState(null)
+  const [alertShow, setAlertShow] = useState(false)
   const [nameDelete, setNameDelete] = useState(null)
 
   useEffect(() => {
-    setSmShow(false)
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setSmShow])
+  }, [])
 
   async function deleteRecipe(id) {
     try {
@@ -63,44 +62,46 @@ function ShowCard({recipes, token}) {
         picture
       }) => {
         return (
-          <Card
-            className="card-myrecipes"
-            key={id}
-          >
-            <Card.Img
-              variant="top"
-              src={picture}
-              alt="imagen de receta"
-            />
-            <Card.Body>
-              <Card.Title>{title}</Card.Title>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroupItem>Dificultad: {level}</ListGroupItem>
-              <ListGroupItem>Duración: {duration}</ListGroupItem>
-              <ListGroupItem>Puntos: {positivePoints > 0 ? positivePoints : 0}</ListGroupItem>
-            </ListGroup>
-            <Card.Body>
-              <Row>
-                <Col className="btns-card">
-                  <Button variant="primary" size="sm">
-                    Ver
-                  </Button>
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={e => (
+          <>
+            <Card
+              className="card-myrecipes"
+              key={id}
+            >
+              <Card.Img
+                variant="top"
+                src={picture}
+                alt="imagen de receta"
+              />
+              <Card.Body>
+                <Card.Title>{title}</Card.Title>
+              </Card.Body>
+              <ListGroup className="list-group-flush">
+                <ListGroupItem>Dificultad: {level}</ListGroupItem>
+                <ListGroupItem>Duración: {duration}</ListGroupItem>
+                <ListGroupItem>Puntos: {positivePoints > 0 ? positivePoints : 0}</ListGroupItem>
+              </ListGroup>
+              <Card.Body>
+                <Row>
+                  <Col className="btns-card">
+                    <Button variant="primary" size="sm" href={`/view/${id}`}>
+                      Ver
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={e => (
                         setIdDelete(id),
                         setAlertShow(true),
                         setNameDelete(title)
-                    )}
-                  >
-                    Eliminar
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
+                      )}
+                    >
+                      Eliminar
+                    </Button>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </>
         )
       })
     }
@@ -144,7 +145,10 @@ function ShowCard({recipes, token}) {
       <Modal.Footer className="btns-delete-recipies">
         <Button
           variant="outline-success"
-          onClick={e => deleteRecipe(idDelete)}
+          onClick={e => (
+            deleteRecipe(idDelete),
+            setAlertShow(false)
+            )}
         >
           Sí
         </Button>

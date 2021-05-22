@@ -1,0 +1,13 @@
+.row-navegation-favorites {
+  margin-right: 0;
+}
+
+.row-no-favorites {
+  display: flex;
+  width: 100%;
+  min-height: 60vh;
+}
+
+.col-no-favorites {
+  text-align: center;
+}
