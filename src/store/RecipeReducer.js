@@ -10,7 +10,6 @@ export function getRecipe(idRecipe) {
     dispatch({ type: RECIPE_LOADING })
     dispatch({ type: RECIPE_ERROR, payload: '' })
     try {
-      const token = localStorage.getItem('token')
       const {data} = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,

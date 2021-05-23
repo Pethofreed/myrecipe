@@ -29,7 +29,6 @@ function CreateRecipe({token}) {
   const [loading, setLoading] = useState(false)
   const [noSubmit, setNoSubmit] = useState(false)
   const [ingredients, setIngredients] = useState('')
-  const [description, setDescription] = useState('')
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
   let text = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
@@ -40,7 +39,6 @@ function CreateRecipe({token}) {
     setDuration('')
     setLevel('none')
     setIngredients('')
-    setDescription('')
     setNoSubmit(false)
     setLoading(false)
     setEditorState(EditorState.createEmpty())
@@ -115,8 +113,6 @@ function CreateRecipe({token}) {
       setNoSubmit(true)
     }
   }
-
-  console.log(text)
 
   return (
     <>

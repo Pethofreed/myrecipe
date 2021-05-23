@@ -6,6 +6,7 @@ import {
   Row,
   Col
 } from 'react-bootstrap'
+import './styles.css'
 
 function LandingCard({allRecipes}) {
 
@@ -40,9 +41,9 @@ function LandingCard({allRecipes}) {
               <ListGroupItem>Autor: {User.name}</ListGroupItem>
             </ListGroup>
             <Card.Body>
-              <Row>
-                <Col className="btns-card">
-                  <Button variant="primary" size="sm">
+              <Row className="btn-card-landing">
+                <Col className="btn-card">
+                  <Button variant="primary" size="sm" href={`/view/${id}`}>
                     Ver
                   </Button>
                 </Col>

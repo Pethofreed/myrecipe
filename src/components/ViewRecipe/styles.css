@@ -1,5 +1,6 @@
 .loading-recipe-row {
   display: flex;
+  margin-top: 100px;
 }
 
 .loading-recipe-col {
@@ -10,13 +11,18 @@
   background-color: rgba(240, 240, 240, 0.973);
   border-radius: 20px;
   margin-top: 10%;
+  font-family: sans-serif;
 }
 
 .row-view-picture-recipe, .row-view-title-recipe {
   display: flex;
 }
 
-.col-view-picture-recipe, .col-view-title-recipe {
+.row-view-title-recipe, .row-message-success {
+  margin-top: 15px;
+}
+
+.col-view-picture-recipe, .col-view-title-recipe, .col-message-success {
 text-align: center;
 }
 
@@ -27,6 +33,23 @@ text-align: center;
   box-shadow: 15px 15px 5px rgb(190, 190, 190);
   margin-bottom: 4%;
 }
+
+.row-message-sucess {
+  display: flex;
+}
+
+.btns {
+  display: flex;
+}
+
+.btn-like {
+  text-align: center;
+}
+
+.btn-group {
+  margin: 5px;
+}
+
 
 .col-view-title-recipe {
   font-size: 30px;
@@ -44,11 +67,25 @@ text-align: center;
   padding: 5%;
 }
 
+.row-dates-recipe {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+span {
+  font-weight: bold;
+}
+
+.user-name, .recipe-level, .recipe-points {
+  text-align: center;
+}
+
 @media (min-width: 323px) and (max-width: 600px) {
   .container-view-recipe {
     margin-top: 14%;
     border-radius: 0px;
     padding-top: 20px;
+    margin-bottom: 60px;
   }
   .img-recipe {
     width: 90%;
@@ -74,6 +111,7 @@ text-align: center;
   .container-view-recipe {
     margin-top: 15%;
     padding-top: 15px;
+    margin-bottom: 60px;
   }
   .img-recipe {
     width: 90%
@@ -84,8 +122,42 @@ text-align: center;
   .container-view-recipe {
     margin-top: 12%;
     padding-top: 15px;
+    margin-bottom: 60px;
   }
   .img-recipe {
     width: 85%
+  }
+}
+
+@media (min-width: 690px) and (max-width: 1199px) {
+  .container-view-recipe {
+    margin-top: 12%;
+    padding-top: 15px;
+    margin-bottom: 80px;
+  }
+  .img-recipe {
+    width: 70%
+  }
+}
+
+@media (min-width: 690px) and (max-width: 1280px) {
+  .container-view-recipe {
+    margin-top: 12%;
+    padding-top: 15px;
+    margin-bottom: 80px;
+  }
+  .img-recipe {
+    width: 60%
+  }
+}
+
+@media (min-width: 690px) and (max-width: 1500px) {
+  .container-view-recipe {
+    margin-top: 12%;
+    padding-top: 15px;
+    margin-bottom: 80px;
+  }
+  .img-recipe {
+    width: 60%
   }
 }

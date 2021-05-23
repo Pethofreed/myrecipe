@@ -4,44 +4,90 @@ import {
   Spinner,
   Button,
   Image,
-  Badge,
   Row,
   Col
 } from 'react-bootstrap'
 import './styles.css'
-import { convertToRaw } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
+import axios from 'axios'
 import Footer from '../../components/Footer'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { getRecipe } from '../../store/RecipeReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from '../../store/UserReducer'
 
 function ViewRecipe() {
 
   const dispatch = useDispatch()
   const { idRecipe } = useParams()
+  const [likeError, setLikeError] = useState(null)
+  const [likeSuccess, setLikeSuccess] = useState(null)
+  const [favoriteError, setFavoriteError] = useState(null)
+  const [favoriteSuccess, setFavoriteSuccess] = useState(null)
 
   useEffect(() => {
     dispatch(getRecipe(idRecipe))
+    const auth = localStorage.getItem('token')
+    {auth && dispatch(getUser())}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, idRecipe])
 
-  const { oneRecipe, loading, error } = useSelector(({
-    RecipeReducer
+  const { oneRecipe, loading, error, user } = useSelector(({
+    RecipeReducer, UserReducer
   }) => ({
     error: RecipeReducer.error,
     loading: RecipeReducer.loading,
     oneRecipe: RecipeReducer.oneRecipe,
+    user: UserReducer.user
   }))
 
-  function createMarkup() {
-    return {__html: 'First &middot; Second'};
+  const token = localStorage.getItem('token')
+
+  async function handleLike(id){
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/recipes/addPoint',
+        data: {
+          id,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setLikeSuccess(true)
+    } catch (error) {
+      // setLikeError(error.message)
+      setLikeError(error.message)
+    }
   }
 
+  async function handleFavorites(id){
+    try {
+      const { data } = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/favorites/add',
+        data: {
+          recipeid: id
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setFavoriteSuccess(true)
+    } catch (error) {
+      // setLikeError(error.message)
+      setFavoriteError(error.message)
+    }
+  }
+
+  const { User } = oneRecipe
   const separarPorComas = /\s*,\s*/
   const ingredients = !!oneRecipe && !!oneRecipe.ingredients && oneRecipe.ingredients.split(separarPorComas)
   const description = oneRecipe.description
+
 
   return (
     <>
@@ -74,6 +120,48 @@ function ViewRecipe() {
                 />
               </Col>
             </Row>
+           {token &&
+            <Row className="btns">
+              <Col className="btn-like">
+                {!!User && User.id !== user.id &&
+                  <Button
+                    size="sm"
+                    className="btn-group"
+                    onClick={e => handleLike(oneRecipe.id)}
+                  >Me gusta</Button>
+                }
+                <Button
+                  size="sm"
+                  className="btn-group"
+                  onClick={e => handleFavorites(oneRecipe.id)}
+                >Añadir a Favoritos</Button>
+              </Col>
+              {likeError &&
+                <Col>
+                  <p>{likeError}</p>
+                </Col>
+              }
+              {favoriteError &&
+                <Col>
+                  <p>{favoriteError}</p>
+                </Col>
+              }
+            </Row>
+            }
+            {likeSuccess &&
+              <Row className="row-message-success">
+                <Col className="col-message-success">
+                  <p>Hemos añadido tu puntuación.</p>
+                </Col>
+              </Row>
+            }
+            {favoriteSuccess &&
+              <Row className="row-message-success">
+                <Col className="col-message-success">
+                  <p>Se ha añadido a tus favoritos</p>
+                </Col>
+              </Row>
+            }
             <Row className="row-view-title-recipe">
               <Col className="col-view-title-recipe">
                 <p>{oneRecipe.title}</p>
@@ -85,8 +173,8 @@ function ViewRecipe() {
                   <ListGroup.Item>
                     INGREDIENTES
                   </ListGroup.Item>
-                  {!!ingredients && ingredients.length > 0 && ingredients.map(ingredient =>
-                    <ListGroup.Item>
+                  {!!ingredients && ingredients.length > 0 && ingredients.map((ingredient, index) =>
+                    <ListGroup.Item key={index}>
                       <li  className="item-lista-ingredients">
                         {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
                       </li>
@@ -102,6 +190,17 @@ function ViewRecipe() {
             </Row>
             <div className="description-recipe" dangerouslySetInnerHTML={{ __html: description}}>
             </div>
+            <Row className="row-dates-recipe">
+              <Col className="user-name" sm={4}>
+                <p><span>Autor:</span> {!!User && User.name}</p>
+              </Col>
+              <Col className="recipe-level" sm={4}>
+                <p><span>Dificultad:</span> {oneRecipe.level}</p>
+              </Col>
+              <Col className="recipe-points" sm={4}>
+                <p><span>Puntos:</span> {oneRecipe.positivePoints > 0 ? oneRecipe.positivePoints : 0}</p>
+              </Col>
+            </Row>
           </Container>
           <Footer />
         </>

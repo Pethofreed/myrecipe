@@ -3,9 +3,12 @@
   margin: 2%;
 }
 
-.btns-card {
+.btn-card-landing {
   display: flex;
-  justify-content: space-between;
+}
+
+.btn-card {
+  text-align: center;
 }
 
 @media (min-width: 100px) and (max-width: 450px) {

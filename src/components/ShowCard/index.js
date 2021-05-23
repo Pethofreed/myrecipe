@@ -89,11 +89,11 @@ function ShowCard({recipes, token}) {
                     <Button
                       variant="danger"
                       size="sm"
-                      onClick={e => (
-                        setIdDelete(id),
-                        setAlertShow(true),
-                        setNameDelete(title)
-                      )}
+                      onClick={() => {
+                        setIdDelete(id);
+                        setAlertShow(true);
+                        setNameDelete(title);
+                      }}
                     >
                       Eliminar
                     </Button>
@@ -145,10 +145,10 @@ function ShowCard({recipes, token}) {
       <Modal.Footer className="btns-delete-recipies">
         <Button
           variant="outline-success"
-          onClick={e => (
-            deleteRecipe(idDelete),
-            setAlertShow(false)
-            )}
+          onClick={() => {
+            deleteRecipe(idDelete);
+            setAlertShow(false);
+          }}
         >
           Sí
         </Button>
