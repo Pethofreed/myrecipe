@@ -10,7 +10,11 @@ import './styles.css'
 import axios from 'axios'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import draftToHtml from 'draftjs-to-html'
+import { Editor } from 'react-draft-wysiwyg'
+import { EditorState, convertToRaw } from 'draft-js'
 import { getRecipes } from '../../store/RecipesReducer'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 function CreateRecipe({token}) {
 
@@ -26,6 +30,8 @@ function CreateRecipe({token}) {
   const [noSubmit, setNoSubmit] = useState(false)
   const [ingredients, setIngredients] = useState('')
   const [description, setDescription] = useState('')
+  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  let text = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
   function handleClose() {
     setTitle('')
@@ -37,10 +43,15 @@ function CreateRecipe({token}) {
     setDescription('')
     setNoSubmit(false)
     setLoading(false)
+    setEditorState(EditorState.createEmpty())
   }
 
   function handlePicture(e){
     setPicture(e.target.files)
+  }
+
+  function onEditorStateChange (editorState) {
+    setEditorState(editorState)
   }
 
   function validator(){
@@ -64,7 +75,7 @@ function CreateRecipe({token}) {
       setCamp('Ingredientes')
       return false
     }
-    if(description === ''){
+    if(draftToHtml(convertToRaw(editorState.getCurrentContent())) === <p></p>){
       setCamp('Receta')
       return false
     }
@@ -80,7 +91,7 @@ function CreateRecipe({token}) {
           form.append('level', level)
           form.append('title', title)
           form.append('duration', duration)
-          form.append('description', description)
+          form.append('description', text)
           form.append('ingredients', ingredients)
           form.append('picture', picture[0], picture[0].name)
 
@@ -104,6 +115,8 @@ function CreateRecipe({token}) {
       setNoSubmit(true)
     }
   }
+
+  console.log(text)
 
   return (
     <>
@@ -197,15 +210,20 @@ function CreateRecipe({token}) {
                 </Col>
               </Form.Group>
             </Row>
+            <hr></hr>
             <Row>
               <Col>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    placeholder="Redacte acá su receta paso a paso"
-                    onChange={e => setDescription(e.target.value)}
-                    value={description}
+                  <Col className="text-center">
+                    <Form.Label>
+                      <h4>Redacte su receta</h4>
+                    </Form.Label>
+                  </Col>
+                  <Editor
+                    editorState={editorState}
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    onEditorStateChange={onEditorStateChange}
                   />
                   {noSubmit &&
                     <p class="text-center mt-2 message-no-submit">

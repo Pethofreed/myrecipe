@@ -9,7 +9,6 @@ export function getRecipe(idRecipe) {
   return async function(dispatch){
     dispatch({ type: RECIPE_LOADING })
     dispatch({ type: RECIPE_ERROR, payload: '' })
-    console.log(idRecipe)
     try {
       const token = localStorage.getItem('token')
       const {data} = await axios({

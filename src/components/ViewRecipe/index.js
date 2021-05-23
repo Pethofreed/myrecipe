@@ -9,6 +9,8 @@ import {
   Col
 } from 'react-bootstrap'
 import './styles.css'
+import { convertToRaw } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
 import Footer from '../../components/Footer'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
@@ -33,8 +35,13 @@ function ViewRecipe() {
     oneRecipe: RecipeReducer.oneRecipe,
   }))
 
+  function createMarkup() {
+    return {__html: 'First &middot; Second'};
+  }
+
   const separarPorComas = /\s*,\s*/
   const ingredients = !!oneRecipe && !!oneRecipe.ingredients && oneRecipe.ingredients.split(separarPorComas)
+  const description = oneRecipe.description
 
   return (
     <>
@@ -93,8 +100,7 @@ function ViewRecipe() {
                 <h4>INSTRUCCIONES</h4>
               </Col>
             </Row>
-            <div className="description-recipe">
-              <p>{oneRecipe.description}</p>
+            <div className="description-recipe" dangerouslySetInnerHTML={{ __html: description}}>
             </div>
           </Container>
           <Footer />
