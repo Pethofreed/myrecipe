@@ -15,9 +15,6 @@ export function getRecipe(idRecipe) {
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: `/recipes/getRecipe/${idRecipe}`,
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
       })
       dispatch({ type: RECIPE_SUCCESS, payload: data})
     } catch (error) {

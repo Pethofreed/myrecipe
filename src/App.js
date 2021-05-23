@@ -42,9 +42,9 @@ function App() {
         <PrivateRoute exact path="/myrecipes">
           <MyRecipes />
         </PrivateRoute>
-        <PrivateRoute exact path="/view/:idRecipe">
+        <Route exact path="/view/:idRecipe">
           <ViewRecipes />
-        </PrivateRoute>
+        </Route>
       </Switch>
     </Router>
   )
