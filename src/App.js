@@ -11,7 +11,8 @@ import { SigninForm } from './pages/SignIn'
 import { LandingPage } from './pages/Landing'
 import { Favorites } from './pages/Favorites'
 import { MyRecipes } from './pages/MyRecipes'
-import { ViewRecipes} from './pages/ViewRecipes'
+import { ViewRecipes } from './pages/ViewRecipes'
+import { ViewSearchs } from './pages/ViewSearchs'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function PrivateRoute({children, ...rest}) {
@@ -44,6 +45,9 @@ function App() {
         </PrivateRoute>
         <Route exact path="/view/:idRecipe">
           <ViewRecipes />
+        </Route>
+        <Route exact path="/search/:search">
+          <ViewSearchs />
         </Route>
       </Switch>
     </Router>

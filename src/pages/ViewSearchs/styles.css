@@ -1,0 +1,22 @@
+.message-no-results {
+  font-size: 3vh;
+}
+
+.row-loading {
+  margin-bottom: 22%;
+}
+
+@media (min-width: 600px) and (max-width: 767px) {
+  .row-message{
+    margin-bottom: 41%;
+  }
+  .row-loading {
+    margin-bottom: 55%;
+  }
+}
+
+@media (min-width: 323px) and (max-width: 600px) {
+  .row-message, .row-loading {
+    margin-bottom: 37%;
+  }
+}

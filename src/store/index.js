@@ -4,6 +4,7 @@ import { UserReducer } from './UserReducer'
 import { SignupReducer } from './SignupReducer'
 import { SigninReducer } from './SigninReducer'
 import { RecipeReducer } from './RecipeReducer'
+import { SearchReducer } from './SearchReducer'
 import { RecipesReducer } from './RecipesReducer'
 import { FavoritesReducer } from './FavoritesReducer'
 import { AllRecipesReducer } from './AllRecipesReducer'
@@ -12,6 +13,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 const appReducers = combineReducers({
   UserReducer,
   RecipeReducer,
+  SearchReducer,
   SignupReducer,
   SigninReducer,
   RecipesReducer,

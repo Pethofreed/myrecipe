@@ -21,8 +21,8 @@ function Navigation({top}) {
   const dispatch = useDispatch()
   const token = localStorage.getItem('token')
 
-  const [show, setShow] = useState(false);
-  const [searchRecipe, setSearchRecipe] = useState('')
+  const [show, setShow] = useState(false)
+  const [search, setSearch] = useState(null)
 
   function handleClick() {
     dispatch({type: 'USER_LOGOUT'})
@@ -32,34 +32,14 @@ function Navigation({top}) {
 
   function handleClose() {
     setShow(false)
-    setSearchRecipe('')
+    setSearch('')
   }
 
-  async function handleSubmitModal (e) {
-    e.preventDefault()
-
-    // if(!!emailToRecovery) {
-    //   try {
-    //     const { data } = await axios ({
-    //       method: 'POST',
-    //       baseURL: process.env.REACT_APP_SERVER_URL,
-    //       url: '/users/recovery',
-    //       data : {
-    //         email : emailToRecovery,
-    //       }
-    //     })
-
-    //     if(data.message === 'correctly') {
-    //       setResult(true)
-    //       setExistEmail(true)
-    //     } else {
-    //       setExistEmail(false)
-    //     }
-    //   } catch (error) {
-    //     setResult(false)
-    //   }
-    // }
-
+  function handleSearch() {
+    setShow(false)
+    if(search){
+      history.push(`/search/${search[0].toUpperCase() + search.slice(1)}`)
+    }
   }
 
   return (
@@ -74,8 +54,18 @@ function Navigation({top}) {
           <Col className="d-none d-md-block">
             <Form inline>
               <Row>
-                <Col><FormControl type="text" placeholder="¿Qué receta buscas?" className=" mr-sm-2" /></Col>
-                <Col><Button type="submit">Buscar</Button></Col>
+                <Col>
+                  <FormControl
+                    type="text"
+                    placeholder="¿Qué receta buscas?"
+                    className=" mr-sm-2"
+                    onChange={e => setSearch(e.target.value)}
+                    value={search}
+                  />
+                </Col>
+                <Col>
+                  <Button onClick={handleSearch}>Buscar</Button>
+                </Col>
               </Row>
             </Form>
           </Col>
@@ -129,8 +119,8 @@ function Navigation({top}) {
                   id="recipeToSearch"
                   name="recipe"
                   type="text"
-                  onChange={e => setSearchRecipe(e.target.value)}
-                  value={searchRecipe}
+                  onChange={e => setSearch(e.target.value)}
+                  value={search}
                   placeholder="ejemplo: Pasteles"
                   required
                 />
@@ -139,7 +129,7 @@ function Navigation({top}) {
                 <Button
                   type="button"
                   variant="outline-primary"
-                  onClick={handleSubmitModal}
+                  onClick={handleSearch}
                 >
                   Buscar
                 </Button>
