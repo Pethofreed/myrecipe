@@ -3,9 +3,10 @@ import logger from 'redux-logger'
 import { UserReducer } from './UserReducer'
 import { SignupReducer } from './SignupReducer'
 import { SigninReducer } from './SigninReducer'
-import { RecipesReducer } from './RecipesReducer'
-import { AllRecipesReducer } from './AllRecipesReducer'
 import { RecipeReducer } from './RecipeReducer'
+import { RecipesReducer } from './RecipesReducer'
+import { FavoritesReducer } from './FavoritesReducer'
+import { AllRecipesReducer } from './AllRecipesReducer'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 const appReducers = combineReducers({
@@ -14,6 +15,7 @@ const appReducers = combineReducers({
   SignupReducer,
   SigninReducer,
   RecipesReducer,
+  FavoritesReducer,
   AllRecipesReducer
 })
 

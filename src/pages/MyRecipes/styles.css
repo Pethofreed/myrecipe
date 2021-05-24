@@ -38,6 +38,10 @@
 .container-myrecipes {
   display: block;
   font: -webkit-small-control;
+  background-color: rgba(240, 240, 240, 0.795);
+  border-radius: 15px;
+  margin-bottom: 6%;
+  margin-top: 4%;
 }
 
 .contenedor-dos {
@@ -50,7 +54,11 @@
 }
 
 .btn-loading {
-  display: grid;
+  text-align: center;
+}
+
+.spinner-load-my-recipes {
+  margin-right: 15px;
 }
 
 .cards-individual {

@@ -85,7 +85,13 @@ function EditarPerfil({user, token}) {
 
   return (
     <>
-      <Button onClick={e => setShow(true)}>Editar Perfil</Button>
+      <Button onClick={e => {
+        setName(user.name)
+        setEmail(user.email)
+        setSpeciality(user.speciality)
+        setShow(true)
+        }
+      }>Editar Perfil</Button>
       <Modal
         show={show}
         onHide={handleClose}

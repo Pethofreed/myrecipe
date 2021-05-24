@@ -22,6 +22,16 @@
   margin-top: 15px;
 }
 
+.row-message-success {
+  color: green;
+  font-weight: bold;
+}
+
+.success-op {
+  width: 25px;
+  margin-right: 10px;
+}
+
 .col-view-picture-recipe, .col-view-title-recipe, .col-message-success {
 text-align: center;
 }
@@ -75,6 +85,7 @@ text-align: center;
 span {
   font-weight: bold;
 }
+
 
 .user-name, .recipe-level, .recipe-points {
   text-align: center;

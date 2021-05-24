@@ -9,43 +9,56 @@ import {
 } from 'react-bootstrap'
 import './styles.css'
 import axios from 'axios'
-import Footer from '../../components/Footer'
 import { useParams } from 'react-router'
+import ImageSuccess from './success.png'
 import { useEffect, useState } from 'react'
+import Footer from '../../components/Footer'
+import { getUser } from '../../store/UserReducer'
 import { getRecipe } from '../../store/RecipeReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser } from '../../store/UserReducer'
+import { getFavorites } from '../../store/FavoritesReducer'
 
 function ViewRecipe() {
 
+  let isFavorite = false
   const dispatch = useDispatch()
   const { idRecipe } = useParams()
   const [likeError, setLikeError] = useState(null)
   const [likeSuccess, setLikeSuccess] = useState(null)
   const [favoriteError, setFavoriteError] = useState(null)
   const [favoriteSuccess, setFavoriteSuccess] = useState(null)
+  const [favoriteDeleteError, setFavoriteDeleteError] = useState(null)
+  const [favoriteDeleteSuccess, setFavoriteDeleteSuccess] = useState(null)
 
   useEffect(() => {
-    dispatch(getRecipe(idRecipe))
     const auth = localStorage.getItem('token')
+    setLikeSuccess(null)
+    setLikeError(null)
+    setFavoriteSuccess(null)
+    setFavoriteError(null)
+    setFavoriteDeleteSuccess(null)
+    setFavoriteDeleteError(null)
+    {auth && dispatch(getFavorites())}
     {auth && dispatch(getUser())}
+    dispatch(getRecipe(idRecipe))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, idRecipe])
 
-  const { oneRecipe, loading, error, user } = useSelector(({
-    RecipeReducer, UserReducer
+  const { oneRecipe, loading, error, user, favorites } = useSelector(({
+    RecipeReducer, UserReducer, FavoritesReducer
   }) => ({
     error: RecipeReducer.error,
     loading: RecipeReducer.loading,
     oneRecipe: RecipeReducer.oneRecipe,
-    user: UserReducer.user
+    user: UserReducer.user,
+    favorites: FavoritesReducer.favoritesRecipes
   }))
 
   const token = localStorage.getItem('token')
 
   async function handleLike(id){
     try {
-      const { data } = await axios({
+      await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/recipes/addPoint',
@@ -57,15 +70,19 @@ function ViewRecipe() {
         },
       })
       setLikeSuccess(true)
+      setLikeError(null)
+      setFavoriteSuccess(null)
+      setFavoriteError(null)
+      setFavoriteDeleteSuccess(null)
+      setFavoriteDeleteError(null)
     } catch (error) {
-      // setLikeError(error.message)
       setLikeError(error.message)
     }
   }
 
   async function handleFavorites(id){
     try {
-      const { data } = await axios({
+      await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/favorites/add',
@@ -77,9 +94,39 @@ function ViewRecipe() {
         },
       })
       setFavoriteSuccess(true)
+      setLikeSuccess(null)
+      setLikeError(null)
+      setFavoriteError(null)
+      setFavoriteDeleteSuccess(null)
+      setFavoriteDeleteError(null)
+      dispatch(getFavorites())
     } catch (error) {
-      // setLikeError(error.message)
       setFavoriteError(error.message)
+    }
+  }
+
+  async function handleFavoriteDelete(id){
+    try {
+      await axios({
+        method: 'PUT',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/favorites/destroy',
+        data: {
+          recipeid: id
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setFavoriteDeleteSuccess(true)
+      setLikeSuccess(null)
+      setLikeError(null)
+      setFavoriteSuccess(null)
+      setFavoriteError(null)
+      setFavoriteDeleteError(null)
+      dispatch(getFavorites())
+    } catch (error) {
+      setFavoriteDeleteError(error.message)
     }
   }
 
@@ -87,6 +134,12 @@ function ViewRecipe() {
   const separarPorComas = /\s*,\s*/
   const ingredients = !!oneRecipe && !!oneRecipe.ingredients && oneRecipe.ingredients.split(separarPorComas)
   const description = oneRecipe.description
+
+  favorites.forEach( favorite => {
+    if(favorite.recipeid === oneRecipe.id){
+      return isFavorite = true
+    }
+  })
 
 
   return (
@@ -120,45 +173,83 @@ function ViewRecipe() {
                 />
               </Col>
             </Row>
-           {token &&
-            <Row className="btns">
-              <Col className="btn-like">
-                {!!User && User.id !== user.id &&
-                  <Button
-                    size="sm"
-                    className="btn-group"
-                    onClick={e => handleLike(oneRecipe.id)}
-                  >Me gusta</Button>
-                }
-                <Button
-                  size="sm"
-                  className="btn-group"
-                  onClick={e => handleFavorites(oneRecipe.id)}
-                >Añadir a Favoritos</Button>
-              </Col>
-              {likeError &&
-                <Col>
-                  <p>{likeError}</p>
+            {token &&
+              <Row className="btns">
+                <Col className="btn-like">
+                  {!!User && User.id !== user.id &&
+                    <Button
+                      size="sm"
+                      className="btn-group"
+                      onClick={e => handleLike(oneRecipe.id)}
+                    >Me gusta</Button>
+                  }
+                  {isFavorite &&
+                    <Button
+                      size="sm"
+                      className="btn-group"
+                      onClick={e => handleFavoriteDelete(oneRecipe.id)}
+                    >Quitar de Favoritos</Button>
+                  }
+                  {!isFavorite &&
+                    <Button
+                      size="sm"
+                      className="btn-group"
+                      onClick={e => handleFavorites(oneRecipe.id)}
+                    >
+                      Añadir a Favoritos
+                    </Button>
+                  }
                 </Col>
-              }
-              {favoriteError &&
-                <Col>
-                  <p>{favoriteError}</p>
-                </Col>
-              }
-            </Row>
+              </Row>
             }
             {likeSuccess &&
               <Row className="row-message-success">
                 <Col className="col-message-success">
-                  <p>Hemos añadido tu puntuación.</p>
+                  <p>
+                    <img src={ImageSuccess} alt="img-succees" class="success-op" />
+                    Hemos añadido tu puntuación.
+                  </p>
+                </Col>
+              </Row>
+            }
+            {likeError &&
+              <Row className="row-message-success">
+                <Col className="col-message-success">
+                  <p>¡ups! ha ocurrido un error.</p>
                 </Col>
               </Row>
             }
             {favoriteSuccess &&
               <Row className="row-message-success">
                 <Col className="col-message-success">
-                  <p>Se ha añadido a tus favoritos</p>
+                  <p>
+                    <img src={ImageSuccess} alt="img-succees" class="success-op" />
+                    Se ha añadido a tus favoritos.
+                  </p>
+                </Col>
+              </Row>
+            }
+            {favoriteError &&
+              <Row className="row-message-success">
+                <Col className="col-message-success">
+                  <p>¡ups! ha ocurrido un error.</p>
+                </Col>
+              </Row>
+            }
+            {favoriteDeleteSuccess &&
+              <Row className="row-message-success">
+                <Col className="col-message-success">
+                  <p>
+                    <img src={ImageSuccess} alt="img-succees" class="success-op" />
+                    Se ha eliminado de tus favoritos
+                  </p>
+                </Col>
+              </Row>
+            }
+            {favoriteDeleteError &&
+              <Row className="row-message-success">
+                <Col className="col-message-success">
+                  <p>¡ups! ha ocurrido un error.</p>
                 </Col>
               </Row>
             }

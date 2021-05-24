@@ -1,0 +1,41 @@
+.card-myrecipes {
+  flex-basis: 21%;
+  margin: 2%;
+}
+
+.btn-card-landing {
+  display: flex;
+}
+
+.btn-card {
+  text-align: center;
+}
+
+@media (min-width: 100px) and (max-width: 450px) {
+  .card-myrecipes {
+    flex-basis: 90%;
+    margin: 10%;
+  }
+}
+
+@media (min-width: 451px) and (max-width: 540px) {
+  .card-myrecipes {
+    flex-basis: 40%;
+    margin: 5%;
+  }
+}
+
+@media (min-width: 540px) and (max-width: 900px) {
+  .card-myrecipes {
+    flex-basis: 30%;
+    margin: 1.5%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1300px) {
+  .card-myrecipes {
+    flex-basis: 22%;
+    margin: 1.5%;
+  }
+}
+

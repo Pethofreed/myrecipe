@@ -1,5 +1,8 @@
 import './styles.css'
 import {
+  Spinner
+} from 'react-bootstrap'
+import {
   changeEmail,
   changeError,
   changeName,
@@ -8,6 +11,7 @@ import {
   changeSpeciality,
 } from '../../store/SignupReducer'
 import axios from 'axios'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useDispatch, useSelector} from 'react-redux'
@@ -17,6 +21,7 @@ function SignUp() {
 
   const history = useHistory()
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
 
   const {
     name,
@@ -39,6 +44,7 @@ function SignUp() {
       dispatch(changeError('Las contraseñas no coinciden'))
     } else {
       try {
+        setLoading(true)
         const { data } = await axios ({
           method: 'POST',
           baseURL: process.env.REACT_APP_SERVER_URL,
@@ -51,9 +57,11 @@ function SignUp() {
           },
         })
         localStorage.setItem('token', data.token)
+        setLoading(false)
         history.push('/myrecipes')
       } catch(error){
         dispatch(changeError(error.response.data.message))
+        setLoading(false)
       }
     }
   }
@@ -125,6 +133,16 @@ function SignUp() {
           }
           <Form.Group className="button-signup-registrar">
             <Button variant="outline-success" type="submit">
+              {loading &&
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                  className="spinner-signup"
+                />
+              }
               Registrarme
             </Button>
           </Form.Group>

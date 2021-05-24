@@ -227,6 +227,7 @@ export function MyRecipes() {
                   size="sm"
                   role="status"
                   aria-hidden="true"
+                  className="spinner-load-my-recipes"
                 />
                 Cargando . . .
               </Button>
