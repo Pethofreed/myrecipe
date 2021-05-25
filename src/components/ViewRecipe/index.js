@@ -199,6 +199,13 @@ function ViewRecipe() {
                       Añadir a Favoritos
                     </Button>
                   }
+                  {!!User && User.id === user.id &&
+                    <Button
+                      size="sm"
+                      className="btn-group"
+                      href={`/edit/${oneRecipe.id}`}
+                    >Editar Receta</Button>
+                  }
                 </Col>
               </Row>
             }

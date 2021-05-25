@@ -3,14 +3,14 @@ import {
   Col
 } from 'react-bootstrap'
 import Github from './github.png'
-import Logo from './logoFooter.png'
+import Logo from './logoFooter.PNG'
 import Youtube from './youtube.png'
 import Linkedin from './linkedin.png'
 import Instagram from './instagram.png'
 import './styles.css'
 
 function Footer() {
-  
+
   return (
     <Row className="row-footer">
       <Col className="column-one">

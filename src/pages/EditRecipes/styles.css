@@ -1,0 +1,111 @@
+.container-landing {
+  display: block;
+  font: -webkit-small-control;
+  background-color: rgba(240, 240, 240, 0.795);
+  border-radius: 15px;
+  margin-bottom: 6%;
+}
+
+.contenedor-dos {
+  display: block;
+}
+
+.loading-message {
+  margin-top: 30px;
+}
+
+.alert-myrecipes {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.cards-individual {
+  display: flex;
+  width: 100%;
+}
+
+@media (min-width: 100px) and (max-width: 450px) {
+  .card-myrecipes {
+    flex-basis: 90%;
+    margin: 10%;
+  }
+  .row-cards{
+    margin-top: 30%;
+  }
+  .row-btn-cargando {
+    margin-top: 30%;
+  }
+  .container-landing {
+    background-color: white;
+  }
+}
+
+@media (min-width: 451px) and (max-width: 540px) {
+  .card-myrecipes {
+    flex-basis: 40%;
+    margin: 5%;
+  }
+  .row-cards{
+    margin-top: 20%;
+  }
+  .row-btn-cargando {
+    margin-top: 20%;
+  }
+  .container-landing {
+    background-color: white;
+  }
+}
+
+@media (min-width: 540px) and (max-width: 900px) {
+  .card-myrecipes {
+    flex-basis: 30%;
+    margin: 1.5%;
+  }
+  .row-cards{
+    margin-top: 20%;
+  }
+  .row-btn-cargando {
+    margin-top: 15%;
+  }
+  .cards-individual {
+    margin-top: 3%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1300px) {
+  .card-myrecipes {
+    flex-basis: 22%;
+    margin: 1.5%;
+  }
+  .row-cards{
+    margin-top: 14%;
+  }
+  .row-btn-cargando {
+    margin-top: 20%;
+  }
+  .cards-individual {
+    margin-top: 3%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 992px) {
+  .row-cards{
+    margin-top: 19%;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 2000px) {
+  .card-myrecipes {
+    flex-basis: 22%;
+    margin: 1.5%;
+  }
+  .row-cards{
+    margin-top: 12%;
+  }
+  .row-btn-cargando {
+    margin-top: 10%;
+  }
+  .cards-individual {
+    margin-top: 3%;
+  }
+}

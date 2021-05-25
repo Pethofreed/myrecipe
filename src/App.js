@@ -11,9 +11,10 @@ import { SigninForm } from './pages/SignIn'
 import { LandingPage } from './pages/Landing'
 import { Favorites } from './pages/Favorites'
 import { MyRecipes } from './pages/MyRecipes'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { EditRecipes } from './pages/EditRecipes'
 import { ViewRecipes } from './pages/ViewRecipes'
 import { ViewSearchs } from './pages/ViewSearchs'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function PrivateRoute({children, ...rest}) {
   const token = localStorage.getItem('token')
@@ -49,6 +50,9 @@ function App() {
         <Route exact path="/search/:search">
           <ViewSearchs />
         </Route>
+        <PrivateRoute exact path="/edit/:idRecipe">
+          <EditRecipes />
+        </PrivateRoute>
       </Switch>
     </Router>
   )

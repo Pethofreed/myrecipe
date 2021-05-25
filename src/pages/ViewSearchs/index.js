@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap'
 import './styles.css'
 import { useParams } from 'react-router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Footer from '../../components/Footer'
 import Navigation from "../../components/Navegation"
 import { useDispatch, useSelector } from 'react-redux'

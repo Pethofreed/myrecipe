@@ -1,0 +1,29 @@
+.container-edit {
+  padding: 0;
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.img-edit {
+  width: 60%;
+  border-radius: 15px;
+}
+
+.label-input {
+  text-decoration: none;
+  padding: 5px;
+  color: #ffffff;
+  background:
+    linear-gradient(to right, #732fdf, #bd00ff);
+  border-radius: 7px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.input-file {
+  display: none;
+}
+
+.message-no-submit {
+  font-size: 17px;
+}
