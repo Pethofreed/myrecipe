@@ -11,7 +11,6 @@ import {
 import './styles.css'
 import axios from 'axios'
 import draftToHtml from 'draftjs-to-html'
-import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { useState, useEffect } from 'react'
 import { Editor } from 'react-draft-wysiwyg'
@@ -33,11 +32,10 @@ function EditRecipe({oneRecipe, loading, error}) {
     setDuration(oneRecipe.duration)
     setIngredients(oneRecipe.ingredients)
     setId(oneRecipe.id)
-  },[])
+  },[oneRecipe.id, oneRecipe.title, oneRecipe.level, oneRecipe.duration, oneRecipe.ingredients])
 
   const token = localStorage.getItem('token')
 
-  const dispatch = useDispatch()
   const history = useHistory()
   const [id, setId] = useState(null)
   const [file, setFile] = useState('')
@@ -46,13 +44,9 @@ function EditRecipe({oneRecipe, loading, error}) {
   const [image, setImage] = useState('')
   const [level, setLevel] = useState('')
   const [smShow, setSmShow] = useState(false)
-  const [picture, setPicture] = useState(null)
   const [duration, setDuration] = useState('')
   const [noSubmit, setNoSubmit] = useState(false)
   const [ingredients, setIngredients] = useState('')
-  const [description, setDescription] = useState('')
-  const [contentState, setContentState] = useState()
-  const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [editorState, setEditorState] = useState(EditorState.createWithContent(content))
   let text = draftToHtml(convertToRaw(editorState.getCurrentContent()))
 
@@ -105,7 +99,6 @@ function EditRecipe({oneRecipe, loading, error}) {
     if(validator()){
       if(file){
         try{
-          setLoadingSubmit(true)
           const form = new FormData()
           form.append('id', id)
           form.append('level', level)
@@ -131,7 +124,6 @@ function EditRecipe({oneRecipe, loading, error}) {
         }
       } else {
         try{
-          setLoadingSubmit(true)
           const form = new FormData()
           form.append('id', id)
           form.append('level', level)
